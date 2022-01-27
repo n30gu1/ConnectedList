@@ -91,29 +91,53 @@ void insertLastNode(linkedList_h* L, char* x) {
     temp -> link = newNode;
 }
 
+void deleteFirstNode(linkedList_h* L) {
+    listNode* origin = L -> head;
+    L -> head = L -> head -> link;
+    free(origin);
+}
+
+void deleteMiddleNode(linkedList_h* L, int index) {
+    if (index == 0) {
+        deleteFirstNode(L);
+    } else {
+        listNode* pre = L -> head;
+        for (int i = 0; i < index - 1; i++) {
+            pre = pre -> link;
+        }
+        pre -> link = pre -> link -> link;
+        
+    }
+}
+
 int main(int argc, const char * argv[]) {
     linkedList_h* L;
     L = createLinkedList_h();
     printf("1. Create null list\n");
-    printList(L); getchar();
+    printList(L);
     
     printf("2. Insert node [수] to the list\n");
     insertFirstNode(L, "수");
-    printList(L); getchar();
+    printList(L);
     
     printf("3. Insert node [금] to end of the list\n");
     insertLastNode(L, "금");
-    printList(L); getchar();
+    printList(L);
     
     printf("4. Insert node [월] to start of the list\n");
     insertFirstNode(L, "월");
-    printList(L); getchar();
-    
-    printf("5. Make list null by freeing the list space\n");
-    freeLinkedList_h(L);
     printList(L);
     
-    getchar();
+    printf("5. Delete first node of the list\n");
+    deleteFirstNode(L);
+    printList(L);
+    
+    printf("6. Insert node [목] to the list\n");
+    insertMiddleNode(L, L -> head, "목");
+    printList(L);
+    
+    deleteMiddleNode(L, 2);
+    printList(L);
     
     return 0;
 }
